@@ -1,0 +1,70 @@
+# ConvNet
+Understanding the architecture of a simple Conv Net from
+the PyTorch tutorial "Training a Classifier"
+https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
+Still need to evaluate...
+1) The Training
+2) The Testing
+3) The Loss function
+4) The optimizer
+5) The hyperparameters
+6) Finish writing out the experiment section
+
+    Inputs:
+    The ConvNet Model from the pytorch tutorial takes as input 
+    a set of images (batch size x num channels x width x height)
+    
+    Architecture:
+    Conv -> RElu -> MaxPool -> Conv -> RElu -> MaxPool -> Linear -> RElu -> Linear -> RElu -> Linear
+
+    Functions:
+        Conv2d:
+            Inputs & Args:
+                The conv2d function takes as input B = (batch size) images of size channels x width x height
+                Arg 1 is the number of channels in the input
+                Arg 2 is the number of channels in the output
+                Arg 3 is the filter size which is the same for width and height of the filter
+        
+            How it works:
+                Iterates through the image and selects a patch the same size as the filter to perform a convolution 
+                (Multiply each element of the patch with each element of the filter and sum).
+                The next patch is determined by shifting the current patch to the right by the stride number.
+                Once the right edge of the patch aligns with the right edge of the image, the next patch will start
+                the left edge of the image, shift down by the stride and repeat...
+                The output of conv2d is B x Arg 2 x (width - filter size + 1) x (height - filter size + 1)
+
+            Questions:
+                How do the filter weights get updated on a back propogation?
+                What does the filter represent?
+        Relu:
+            Inputs & Args:
+            The Relu function takes as input the output of the convolution
+            How it works:
+                Relu is the non-linear function that "squishes" the output of the convolution. 
+                It is essentially...
+                    Max(0, Element)
+            Questions:
+                Why Relu instead of normalizing?
+        MaxPool2d:
+            Inputs & Args:
+                The MaxPool2d takes as input the output of the Relu'd convolution
+                Arg 1 is the Patch Size
+                Arg 2 is the Stride
+            How it works:
+                MaxPool2d iterates through the image the same way that conv2d does, but instead of performing a convolution
+                on each patch, it identifies the largest element in the patch and uses that value to represent the patch in the output.
+                The output of of MaxPool2d is determined the same way that the output of conv2d is. (Replace filter size with Arg 1 of MaxPool2d)
+            Questions:
+                Does MaxPool2d work better than AvgPool2d?
+                Is stride == 2 work best?
+        Linear:
+
+    Experiments:
+    After training and inference with the default code from the tutorial, the accuracy was 54%
+    Things I have tried to change to the architecture to improve the accuracy of Inference on the test data set
+       1) Adding more conv layers (with relu and max pool)
+           i) Changing the stride of the max pool layer from 2 to 1 so that each image which is 
+
+#ResNet
+#MuZero
+#DecisionTrees
