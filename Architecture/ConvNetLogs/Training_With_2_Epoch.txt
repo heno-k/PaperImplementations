@@ -1,0 +1,39 @@
+Convolutional Neural Network:
+Hyperparameters:
+
+   Number of Hidden layers is: 6
+   Learning Rate is: ?
+   Momentum is: ?
+   Activation Function is: ReLu
+   Minibatch size is: 4
+   Number of Epochs is: 2
+   Dropout used is: False
+
+Obtaining the training and testing data using Pytorch dataloader functions
+
+Files already downloaded and verified
+Files already downloaded and verified
+
+Beginning training using the neural net
+
+[1,  2000] loss: 2.216
+[1,  4000] loss: 1.882
+[1,  6000] loss: 1.686
+[1,  8000] loss: 1.583
+[1, 10000] loss: 1.527
+[1, 12000] loss: 1.499
+[2,  2000] loss: 1.399
+[2,  4000] loss: 1.384
+[2,  6000] loss: 1.360
+[2,  8000] loss: 1.337
+[2, 10000] loss: 1.338
+[2, 12000] loss: 1.301
+
+Saving the Trained Model
+Finished Training
+
+Beginning testing using the neural net
+Accuracy of the network on the 10000 test images: 54 %
+Testing complete
+
+Press any key to continue . . .

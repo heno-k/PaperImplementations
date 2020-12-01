@@ -3,12 +3,8 @@ Understanding the architecture of a simple Conv Net from
 the PyTorch tutorial "Training a Classifier"
 https://pytorch.org/tutorials/beginner/blitz/cifar10_tutorial.html
 Still need to evaluate...
-1) The Training
-2) The Testing
-3) The Loss function
-4) The optimizer
-5) The hyperparameters
-6) Finish writing out the experiment section
+1) Data Augmentation
+2) Finish writing out the experiment section
 
     Inputs:
     The ConvNet Model from the pytorch tutorial takes as input 
@@ -59,12 +55,10 @@ Still need to evaluate...
                 Is stride == 2 work best?
         Linear:
 
+
     Experiments:
     After training and inference with the default code from the tutorial, the accuracy was 54%
     Things I have tried to change to the architecture to improve the accuracy of Inference on the test data set
        1) Adding more conv layers (with relu and max pool)
            i) Changing the stride of the max pool layer from 2 to 1 so that each image which is 
 
-#ResNet
-#MuZero
-#DecisionTrees

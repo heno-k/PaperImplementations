@@ -1,6 +1,12 @@
 # This isn't based off a paper, but it is imperative to understand the fundamentals 
 # of convolutional neural networks
 
+# I tried to implement AlexNet but because ImageNet data set wasn't available (Only providing max of 3x64x64 sized images)
+# I wouldn't be able to use the architecture unless I upscale the images. I also don't have a second GPU to split the training
+# like they did in the paper... Possibly revisit in the future
+
+#Revisit data augmentation techniques?
+
 # https://pytorch.org/docs/stable/generated/torch.nn.Module.html#torch.nn.Module
 # Base class for all nn models
 
@@ -20,7 +26,7 @@ Save_Trained_Model = True
 Model_Path = "C:/Users/Henok/source/repos/PaperImplementations/SavedModels/ConvNet/ConvNet.pth"
 
 # Train new model or load saved trained model
-Load_Saved_Model = True
+Load_Saved_Model = False
 
 # Define the hyperparameters
 NumHiddenLayers = 6
@@ -28,6 +34,9 @@ ActivationFunction = "ReLu"
 MiniBatchSize = 4
 NumEpochs = 2
 DropOutUsed = False
+LearningRate = 0.001    # Learning rate of .01 results in gradient not converging to local minima
+Momentum = .9
+
 
 class Model(nn.Module):
     def __init__(self):
@@ -46,15 +55,15 @@ class Model(nn.Module):
         x = x.view(-1,16*5*5)
         x = F.relu(self.fc1(x))
         x = F.relu(self.fc2(x))
-        return self.fc3(x)
+        return self.fc3(x)  # No soft max layer because it is called in CrossEntropyLoss
 
 def PrintHyperParameters():
     #TODO: Understand Learning Rate, Momentum and Dropout
 
     print("Convolutional Neural Network:\nHyperparameters:\n")
     print("   Number of Hidden layers is: %d" % NumHiddenLayers)
-    print("   Learning Rate is: %d" % NumHiddenLayers)
-    print("   Momentum is: %d" % NumHiddenLayers)
+    print("   Learning Rate is: %f" % LearningRate)
+    print("   Momentum is: %f" % Momentum)
     print("   Activation Function is: " + ActivationFunction)
     print("   Minibatch size is: %d" % MiniBatchSize)
     print("   Number of Epochs is: %d" % NumEpochs)
@@ -101,8 +110,12 @@ def TrainNet(net, trainloader, criterion, optimizer, device):
 
             #forward + backward
             outputs = net(inputs)
+            # Compute the Cross-Entropy Loss of the outputs of NN
             loss = criterion(outputs, labels)
+            # Computes the gradient of the loss and stores in the tensors
             loss.backward()
+            # Uses computed gradient from previous step to update the parameters of the NN
+            # Essentially w = w - lr * gradient 
             optimizer.step()
 
             # print statistics
@@ -162,7 +175,7 @@ def main():
             print("Model was not found... Need to retrain")
         #TODO: Understand criterion and optimizer
         criterion = nn.CrossEntropyLoss()
-        optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)
+        optimizer = optim.SGD(net.parameters(), lr=LearningRate, momentum=Momentum)
 
         # Train the Neural Net
         net = TrainNet(net, trainloader, criterion, optimizer, device)
