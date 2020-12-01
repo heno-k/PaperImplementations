@@ -4,6 +4,8 @@ import torch.nn as nn
 import torch.nn.functional as F
 from torch.nn import TransformerEncoder, TransformerEncoderLayer
 
+
+###### Understanding still in progress############
 class Model(nn.Module):
     def __init__(self,ntoken,ninp,nahead,nhid,nlayers,dropout=.5):
         super(Model, self).__init__()
